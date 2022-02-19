@@ -1,62 +1,81 @@
 // PacMan controls
 
+/**
+ *
+ * Globals
+ *
+ */
+const imgArray = ['./SVG/PacMan-open.svg', './SVG/PacMan-closed.svg'];
+const directionArray = ['right', 'left', 'up', 'down'];
 let pos = 0;
-const pacArray = ['./SVG/PacMan-open.svg', './SVG/PacMan-closed.svg'];
-let direction = 0; // 0 is false
+let direction = 'right';
+let xDirection = 0;
 let focus = 0; // allows for open or closed PacMan mouth
-let moving = false;
-const img = document.getElementById('PacMan');
+let moving;
+const pacMan = document.getElementById('PacMan');
+const imgClass = pacMan.classList;
+console.log(imgClass);
 
-function checkPageBounds(direction, imgWidth) {
+/**
+ *
+ * Boundaries
+ *
+ */
+function checkPageBounds(xDirection, imgWidth) {
   let boundMax = window.innerWidth;
 
   if (pos + imgWidth >= boundMax || pos < 0) {
-    if (direction === 0) {
-      direction = 1;
+    if (xDirection === 0) {
+      xDirection = 1;
     } else {
-      direction = 0;
+      xDirection = 0;
     }
   }
-  return direction;
+  return xDirection;
 }
 
+// try adding a switch case for each direction individually to handle boundaries
+
+/**
+ *
+ * Run controller
+ *
+ */
 function run() {
-  const imgWidth = img.width;
+  const imgWidth = pacMan.width;
   focus = (focus + 1) % 2;
-  direction = checkPageBounds(direction, imgWidth);
-  img.src = pacArray[focus];
-  if (direction) {
+  xDirection = checkPageBounds(xDirection, imgWidth);
+  pacMan.src = imgArray[focus];
+  if (xDirection) {
     pos -= 20;
-    img.style.left = pos + 'px';
-    img.style.transform = 'scaleX(-1)';
+    pacMan.style.left = pos + 'px';
+    pacMan.style.transform = 'scaleX(-1)';
+    // pacMan.style.webkitTransform = 'scaleX(-1)';
   } else {
     pos += 20;
-    img.style.left = pos + 'px';
-    img.style.transform = 'scaleX(1)';
-  }
-  // Use setTimeout to call Run every 200 millesecs
-  if (moving) {
-    let pacManTimer = setTimeout(run, 200);
-    //console.log(pacManTimer);
+    pacMan.style.left = pos + 'px';
+    pacMan.style.transform = 'scaleX(1)';
+    // pacMan.style.webkitTransform = 'scaleX(1)';
   }
 }
 
-// eslint-disable-next-line no-unused-vars
+/**
+ *
+ * Start & Stop Movement
+ *
+ */
+const pacButton = document.getElementById('pacButton');
+
 function toggle() {
-  // button
-  const pacButton = document.getElementById('pacButton');
-  const pacButtonText = ['Start PacMan', 'Stop PacMan'];
-  if (pacButton.textContent === pacButtonText[0]) {
-    pacButton.textContent = pacButtonText[1];
+  if (!moving) {
+    moving = setInterval(run, 200);
+    pacButton.textContent = 'Stop PacMan';
   } else {
-    pacButton.textContent = pacButtonText[0];
-  }
-
-  // movement
-  if (moving === false) {
-    moving = true;
-    run();
-  } else {
-    moving = false;
+    clearInterval(moving);
+    moving = null;
+    pacButton.textContent = 'Start PacMan';
   }
 }
+
+pacButton.addEventListener('click', toggle);
+pacMan.addEventListener('click', toggle);

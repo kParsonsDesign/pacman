@@ -1,27 +1,37 @@
-<html>
-  <head> </head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Simple PacMan</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+  </head>
   <body>
     <h1>Pac Man Exercise!</h1>
     <p>
       <strong>Click PacMan to start him moving or use the button.</strong>
-      <button id="pacButton" onclick="toggle()">Start PacMan</button>
+      <button id="pacButton">Start PacMan</button>
     </p>
-    <!--<div
+    <!-- <div
       style="
         display: block;
         width: 100%;
         height: 500px;
         border: solid black 2px;
+        position: relative;
       "
-    >-->
+    > -->
+    <!-- inline CSS needed to affect movement? -->
     <img
       id="PacMan"
       src="SVG/PacMan-open.svg"
-      onclick="toggle()"
       width="100"
-      style="position: absolute; z-index: 5"
+      class="moveRight"
+      style="position: absolute;"
+      alt="Pac Man"
     />
-    <!--</div>-->
-    <script src="./js/pacman.js"></script>
+    <!-- </div> -->
   </body>
+
+  <script src="./js/pacman.js"></script>
 </html>
