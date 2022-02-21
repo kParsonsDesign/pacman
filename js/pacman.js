@@ -32,36 +32,30 @@ const boundBottom = Math.floor(pacBoundaryClient.bottom) - borderBottomWidth;
 let direction = 0;
 let focus = 0; // allows for open or closed PacMan mouth
 let moving;
-console.log(pacBoundary.offsetWidth);
-console.log(pacBoundaryClient);
-console.log('Div inner width: ');
-console.log(boundWidth);
-console.log('pos: ');
-console.log(pos);
 
 /**
  *
- * Boundaries
+ * Reverse direction at boundaries
  *
  */
 function checkBounds(direction) {
-  // moving right, hit right edge
+  // moving right and hit right edge
   if (
-    pos.right > pacBoundaryClient.right - borderRightWidth - 20
+    pos.right > boundRight - 20
     && direction === 0
   ) {
     direction = 1;
   }
 
-  // moving left, hit left edge
+  // moving left and hit left edge
   if (
-    pos.left <= pacBoundaryClient.left + borderLeftWidth
+    pos.left <= boundLeft
     && direction === 1
   ) {
     direction = 0;
   }
 
-  // moving down, hit bottom edge
+  // moving down and hit bottom edge
   if (
     pos.bottom > pacBoundaryClient.bottom - borderBottomWidth - 20
     && direction === 2
@@ -69,7 +63,7 @@ function checkBounds(direction) {
     direction = 3;
   }
 
-  // moving up, hit top edge
+  // moving up and hit top edge
   if (
     pos.top <= pacBoundaryClient.top + borderTopWidth
     && direction === 3
@@ -160,6 +154,32 @@ function keyPress(e) {
 document.getElementById('pacButton').addEventListener('click', toggle);
 pacMan.addEventListener('click', toggle);
 document.addEventListener('keydown', keyPress);
+
+function swipeEvent(e) {
+  // eslint-disable-next-line default-case
+  switch (e) {
+    case 'swipeRight':
+      direction = 0;
+      break;
+    case 'swipeLeft':
+      direction = 1;
+      break;
+    case 'swipeDown':
+      direction = 2;
+      break;
+    case 'swipeUp':
+      direction = 3;
+      break;
+  }
+}
+
+// handle mobile swipes
+if ('ontouchstart' in document.documentElement) {
+  $('#pacBoundary').on('swiperight', swipeEvent('swipeRight'));
+  $('#pacBoundary').on('swipeleft', swipeEvent('swipeLeft'));
+  $('#pacBoundary').on('swipedown', swipeEvent('swipeDown'));
+  $('#pacBoundary').on('swipeup', swipeEvent('swipeUp'));
+}
 
 /**
  *
