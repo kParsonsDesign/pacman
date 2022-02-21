@@ -28,7 +28,7 @@ const boundRight = Math.floor(pacBoundaryClient.right) - borderRightWidth;
 const boundTop = Math.ceil(pacBoundaryClient.top) + borderTopWidth;
 const boundBottom = Math.floor(pacBoundaryClient.bottom) - borderBottomWidth;
 
-// let direction = 'right';
+// Movement
 let direction = 0;
 let focus = 0; // allows for open or closed PacMan mouth
 let moving;
@@ -87,15 +87,14 @@ function checkBounds(direction) {
  */
 function run() {
   focus = (focus + 1) % 2;
-  direction = checkBounds(direction);
   pacMan.src = imgArray[focus];
+  direction = checkBounds(direction);
   const styleLeftPos = pos.x - boundLeft;
   const styleTopPos = pos.y - boundTop;
 
   // move right
   if (direction === 0) {
     pos.x += 20;
-    //styleLeftPos = pos.x - boundLeft;
     pacMan.style.left = styleLeftPos + 'px';
     pacMan.style.transform = 'scaleX(1)';
   }
@@ -103,7 +102,6 @@ function run() {
   // move left
   if (direction === 1) {
     pos.x -= 20;
-    //styleLeftPos = pos.x - boundLeft;
     pacMan.style.left = styleLeftPos + 'px';
     pacMan.style.transform = 'scaleX(-1)';
   }
@@ -111,7 +109,6 @@ function run() {
   // move down
   if (direction === 2) {
     pos.y += 20;
-    //styleTopPos = pos.y - boundTop;
     pacMan.style.top = styleTopPos + 'px';
     pacMan.style.transform = 'rotate(90deg)';
   }
