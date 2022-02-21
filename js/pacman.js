@@ -5,36 +5,53 @@
  * Globals
  *
  */
+// PacMan
+const pacMan = document.getElementById('PacMan');
 const imgArray = ['./SVG/PacMan-open.svg', './SVG/PacMan-closed.svg'];
-const directionArray = ['right', 'left', 'up', 'down'];
-let pos = 0;
+const imgClass = pacMan.classList;
+const directionArray = ['right', 'left', 'down', 'up'];
+let pos = pacMan.getBoundingClientRect();
+
+// Boundary
+const pacBoundary = document.getElementById('pacBoundary');
+const borderLeftWidth = Number(pacBoundary.style.borderLeftWidth.split('px')[0]);
+const borderRightWidth = Number(pacBoundary.style.borderRightWidth.split('px')[0]);
+const bordersWidth = borderLeftWidth + borderRightWidth;
+const boundWidth = Math.floor(pacBoundary.getBoundingClientRect().width) - bordersWidth;
+
 let direction = 'right';
 let xDirection = 0;
 let focus = 0; // allows for open or closed PacMan mouth
 let moving;
-const pacMan = document.getElementById('PacMan');
-const imgClass = pacMan.classList;
-console.log(imgClass);
+console.log(pacBoundary.offsetWidth);
+console.log(pacBoundary.getBoundingClientRect());
+console.log('Div inner width: ');
+console.log(boundWidth);
+console.log('pos: ');
+console.log(pos);
 
 /**
  *
  * Boundaries
  *
  */
-function checkPageBounds(xDirection, imgWidth) {
-  let boundMax = window.innerWidth;
-
-  if (pos + imgWidth >= boundMax || pos < 0) {
-    if (xDirection === 0) {
-      xDirection = 1;
-    } else {
-      xDirection = 0;
-    }
+function checkBounds(xDirection, imgWidth) {
+  if (
+    pos.right >= pacBoundary.getBoundingClientRect().right - borderRightWidth
+    && xDirection === 0
+  ) {
+    xDirection = 1;
   }
+
+  if (
+    pos.left <= pacBoundary.getBoundingClientRect().left + borderLeftWidth
+    && xDirection === 1
+  ) {
+    xDirection = 0;
+  }
+
   return xDirection;
 }
-
-// try adding a switch case for each direction individually to handle boundaries
 
 /**
  *
@@ -44,16 +61,16 @@ function checkPageBounds(xDirection, imgWidth) {
 function run() {
   const imgWidth = pacMan.width;
   focus = (focus + 1) % 2;
-  xDirection = checkPageBounds(xDirection, imgWidth);
+  xDirection = checkBounds(xDirection, imgWidth);
   pacMan.src = imgArray[focus];
   if (xDirection) {
-    pos -= 20;
-    pacMan.style.left = pos + 'px';
+    pos.x -= 20;
+    pacMan.style.left = pos.x + 'px';
     pacMan.style.transform = 'scaleX(-1)';
     // pacMan.style.webkitTransform = 'scaleX(-1)';
   } else {
-    pos += 20;
-    pacMan.style.left = pos + 'px';
+    pos.x += 20;
+    pacMan.style.left = pos.x + 'px';
     pacMan.style.transform = 'scaleX(1)';
     // pacMan.style.webkitTransform = 'scaleX(1)';
   }
