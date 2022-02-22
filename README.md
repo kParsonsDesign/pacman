@@ -18,5 +18,7 @@ Have fun.
 Planning on adding movement controls, then hopefully include dot eating, a maze/map, score keeper, music, etc.
 
 ### Disclaimer
-<!--License-->
-This is a personal project based on a copyrighted work. I make no profit from this project and it is not available for resale or distribution by any other entity.
+This is a personal project based on a copyrighted work. I make no profit from this project and it is not available for resale by any other entity.
+
+### License
+[MIT License](https://github.com/kParsonsDesign/pacman/blob/main/LICENSE)
