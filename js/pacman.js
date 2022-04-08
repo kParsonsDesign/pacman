@@ -15,22 +15,31 @@ let pos = pacMan.getBoundingClientRect();
 
 // Boundary
 const pacBoundary = document.getElementById('pacBoundary');
-let pacBoundaryClient = pacBoundary.getBoundingClientRect();
-console.log(pacBoundaryClient);
-console.log(pacBoundary.getBox);
-console.log(window.innerHeight);
 const borderLeftWidth = Number(pacBoundary.style.borderLeftWidth.split('px')[0]);
 const borderRightWidth = Number(pacBoundary.style.borderRightWidth.split('px')[0]);
 const borderBottomWidth = Number(pacBoundary.style.borderBottomWidth.split('px')[0]);
 const borderTopWidth = Number(pacBoundary.style.borderTopWidth.split('px')[0]);
 const bordersWidth = borderLeftWidth + borderRightWidth;
 const bordersHeight = borderTopWidth + borderBottomWidth;
-let boundWidth = Math.floor(pacBoundaryClient.width) - bordersWidth;
-let boundHeight = Math.floor(pacBoundaryClient.height) - bordersHeight;
-let boundLeft = Math.ceil(pacBoundaryClient.left) + borderLeftWidth;
-let boundRight = Math.floor(pacBoundaryClient.right) - borderRightWidth;
-let boundTop = Math.ceil(pacBoundaryClient.top) + borderTopWidth;
-let boundBottom = Math.floor(pacBoundaryClient.bottom) - borderBottomWidth;
+
+let pacBoundaryClient;
+let boundWidth;
+let boundHeight;
+let boundLeft;
+let boundRight;
+let boundTop;
+let boundBottom;
+function getBoundaries() {
+  pacBoundaryClient = pacBoundary.getBoundingClientRect();
+  boundWidth = Math.floor(pacBoundaryClient.width) - bordersWidth;
+  boundHeight = Math.floor(pacBoundaryClient.height) - bordersHeight;
+  boundLeft = Math.ceil(pacBoundaryClient.left) + borderLeftWidth;
+  boundRight = Math.floor(pacBoundaryClient.right) - borderRightWidth;
+  boundTop = Math.ceil(pacBoundaryClient.top) + borderTopWidth;
+  boundBottom = Math.floor(pacBoundaryClient.bottom) - borderBottomWidth;
+}
+window.onload = getBoundaries;
+window.addEventListener('resize', getBoundaries);
 
 // Movement
 let direction = 0;
