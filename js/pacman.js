@@ -1,3 +1,4 @@
+// window.onload = () => {
 // PacMan controls
 
 /**
@@ -14,24 +15,28 @@ let pos = pacMan.getBoundingClientRect();
 
 // Boundary
 const pacBoundary = document.getElementById('pacBoundary');
-const pacBoundaryClient = pacBoundary.getBoundingClientRect();
+let pacBoundaryClient = pacBoundary.getBoundingClientRect();
+console.log(pacBoundaryClient);
+console.log(pacBoundary.getBox);
+console.log(window.innerHeight);
 const borderLeftWidth = Number(pacBoundary.style.borderLeftWidth.split('px')[0]);
 const borderRightWidth = Number(pacBoundary.style.borderRightWidth.split('px')[0]);
 const borderBottomWidth = Number(pacBoundary.style.borderBottomWidth.split('px')[0]);
 const borderTopWidth = Number(pacBoundary.style.borderTopWidth.split('px')[0]);
 const bordersWidth = borderLeftWidth + borderRightWidth;
 const bordersHeight = borderTopWidth + borderBottomWidth;
-const boundWidth = Math.floor(pacBoundaryClient.width) - bordersWidth;
-const boundHeight = Math.floor(pacBoundaryClient.height) - bordersHeight;
-const boundLeft = Math.ceil(pacBoundaryClient.left) + borderLeftWidth;
-const boundRight = Math.floor(pacBoundaryClient.right) - borderRightWidth;
-const boundTop = Math.ceil(pacBoundaryClient.top) + borderTopWidth;
-const boundBottom = Math.floor(pacBoundaryClient.bottom) - borderBottomWidth;
+let boundWidth = Math.floor(pacBoundaryClient.width) - bordersWidth;
+let boundHeight = Math.floor(pacBoundaryClient.height) - bordersHeight;
+let boundLeft = Math.ceil(pacBoundaryClient.left) + borderLeftWidth;
+let boundRight = Math.floor(pacBoundaryClient.right) - borderRightWidth;
+let boundTop = Math.ceil(pacBoundaryClient.top) + borderTopWidth;
+let boundBottom = Math.floor(pacBoundaryClient.bottom) - borderBottomWidth;
 
 // Movement
 let direction = 0;
 let focus = 0; // allows for open or closed PacMan mouth
 let moving;
+
 
 /**
  *
@@ -155,6 +160,17 @@ document.getElementById('pacButton').addEventListener('click', toggle);
 pacMan.addEventListener('click', toggle);
 document.addEventListener('keydown', keyPress);
 
+/**
+ *
+ * Mobile Handler
+ *
+ */
+if (pacBoundaryClient.bottom > window.innerHeight - 5) {
+  let tempHeight = window.innerHeight - pacBoundaryClient.top - 10;
+  pacBoundary.style.height = tempHeight + 'px';
+}
+
+/*
 function swipeEvent(e) {
   // eslint-disable-next-line default-case
   switch (e) {
@@ -179,10 +195,12 @@ if ('ontouchstart' in document.documentElement) {
   $('#pacBoundary').on('swipeleft', swipeEvent('swipeLeft'));
   $('#pacBoundary').on('swipedown', swipeEvent('swipeDown'));
   $('#pacBoundary').on('swipeup', swipeEvent('swipeUp'));
-}
+}*/
 
 /**
  *
  * Div Resizer
  *
  */
+
+//  }
