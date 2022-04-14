@@ -47,6 +47,7 @@ let focus = 0; // allows for open or closed PacMan mouth
 let moving;
 
 
+
 /**
  *
  * Reverse direction at boundaries
@@ -87,6 +88,8 @@ function checkBounds(direction) {
 
   return direction;
 }
+
+
 
 /**
  *
@@ -129,6 +132,8 @@ function run() {
   }
 }
 
+
+
 /**
  *
  * User input for movement
@@ -165,9 +170,31 @@ function keyPress(e) {
   }
 }
 
+function changeDirection(input) {
+  // eslint-disable-next-line default-case
+  switch (input) {
+    case 'right':
+      direction = 0;
+      break;
+    case 'left':
+      direction = 1;
+      break;
+    case 'down':
+      direction = 2;
+      break;
+    case 'up':
+      direction = 3;
+      break;
+    // default:
+    //   direction = 1;
+  }
+}
+
 document.getElementById('pacButton').addEventListener('click', toggle);
 pacMan.addEventListener('click', toggle);
 document.addEventListener('keydown', keyPress);
+
+
 
 /**
  *
@@ -212,4 +239,4 @@ if ('ontouchstart' in document.documentElement) {
  *
  */
 
-//  }
+// } // end window.onload
